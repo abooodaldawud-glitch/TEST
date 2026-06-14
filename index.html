@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gift Experience</title>
+  <meta name="description" content="تجربة تفاعلية رومانسية ولطيفة مصممة كهدية شخصية." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell" aria-live="polite">
+    <div class="background-glow" aria-hidden="true"></div>
+    <div class="floating-shapes" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <section id="screen-verify" class="screen active" data-screen="verify">
+      <div class="card verify-card">
+        <div class="status-orb" aria-hidden="true">
+          <span class="orb-ring"></span>
+          <span class="orb-core">✦</span>
+        </div>
+        <p id="verify-text" class="eyebrow">جاري التحقق من أنك إنسان. هذا لن يستغرق سوى بضع ثوانٍ.</p>
+        <div id="verify-spinner" class="spinner" role="status" aria-label="جاري التحميل"></div>
+        <h1 id="verify-title" class="headline hidden">تعذّر التحقق.</h1>
+        <p id="verify-message" class="muted hidden">يبدو أن النظام مُرتبك قليلًا.</p>
+        <button id="retry-verify" class="button primary hidden" type="button">إعادة المحاولة</button>
+        <button id="go-password" class="button primary hidden" type="button">المتابعة بكلمة السر</button>
+      </div>
+    </section>
+
+    <section id="screen-password" class="screen" data-screen="password">
+      <div class="card password-card">
+        <span class="page-tag">كلمة السر</span>
+        <h1 class="headline">أدخلي كلمة السر</h1>
+        <p class="muted">تلميح صغير: التاريخ الذي لا يُنسى.</p>
+        <form id="password-form" class="password-form" autocomplete="off">
+          <label class="sr-only" for="password-input">كلمة السر</label>
+          <input id="password-input" inputmode="numeric" maxlength="6" pattern="[0-9]*" placeholder="••••••" aria-describedby="password-feedback" />
+          <button class="button primary" type="submit">تحقق</button>
+        </form>
+        <p id="password-feedback" class="feedback" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section id="screen-quiz-intro" class="screen" data-screen="quiz-intro">
+      <div class="card intro-card">
+        <span class="page-tag">10 أسئلة</span>
+        <h1 class="headline">جاهزة لاختبار خفيف؟</h1>
+        <p class="muted">قبل البدء، عندك 10 أسئلة فقط. ليست اختبارًا جادًا، لكنها قد تكشف أشياء مهمة جدًا.</p>
+        <button id="start-quiz" class="button primary" type="button">ابدئي الاختبار</button>
+      </div>
+    </section>
+
+    <section id="screen-quiz" class="screen" data-screen="quiz">
+      <div class="card quiz-card">
+        <div class="quiz-topline">
+          <span id="quiz-progress" class="page-tag">السؤال 1 من 10</span>
+          <div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
+        </div>
+        <h1 id="question-title" class="question-title"></h1>
+        <div id="answers" class="answers" role="list"></div>
+        <p id="quiz-feedback" class="feedback"></p>
+      </div>
+    </section>
+
+    <section id="screen-freeze" class="screen" data-screen="freeze">
+      <div class="card freeze-card">
+        <div class="spinner big" role="status" aria-label="الموقع متوقف مؤقتًا"></div>
+        <h1 class="headline">لحظة...</h1>
+        <p class="muted">يبدو أن الموقع علّق قليلًا.</p>
+      </div>
+    </section>
+
+    <section id="screen-quiz-end" class="screen" data-screen="quiz-end">
+      <div class="card intro-card">
+        <span class="page-tag">انتهى الاختبار</span>
+        <h1 class="headline">شكرًا لمشاعرك الصادقة تجاهي في الأسئلة السابقة.</h1>
+        <button id="go-puzzle-intro" class="button primary" type="button">الانتقال إلى الصفحة التالية</button>
+      </div>
+    </section>
+
+    <section id="screen-puzzle-intro" class="screen" data-screen="puzzle-intro">
+      <div class="card intro-card">
+        <span class="page-tag">لعبة البازل</span>
+        <h1 class="headline">لسا ما خلصت زناخة، فاسمحي لي بآخر وحدة.</h1>
+        <p class="muted">بازل بسيط، لكن الموقع عنده رأي خاص بالصورة الصحيحة.</p>
+        <button id="start-puzzle" class="button primary" type="button">استمرار</button>
+      </div>
+    </section>
+
+    <section id="screen-puzzle" class="screen" data-screen="puzzle">
+      <div class="card puzzle-card">
+        <div class="puzzle-header">
+          <div>
+            <span id="puzzle-stage" class="page-tag">المرحلة الأولى</span>
+            <h1 id="puzzle-title" class="headline compact">آر يو ريدي فور بازل قيم؟</h1>
+            <p id="puzzle-subtitle" class="muted">رتّبي صورة القمر خلال 30 ثانية، أو ما في مفاجأة.</p>
+          </div>
+          <div id="timer-wrap" class="timer" aria-label="مؤقت البازل"><span id="timer">30</span><small>ثانية</small></div>
+        </div>
+
+        <div class="puzzle-layout">
+          <div id="puzzle-board" class="puzzle-board" aria-label="لوحة تركيب البازل"></div>
+          <div class="tray-wrap">
+            <p class="tray-title">القطع</p>
+            <div id="pieces-tray" class="pieces-tray" aria-label="قطع البازل"></div>
+          </div>
+        </div>
+
+        <p id="puzzle-feedback" class="feedback"></p>
+      </div>
+    </section>
+
+    <section id="screen-puzzle-error" class="screen" data-screen="puzzle-error">
+      <div class="card error-card">
+        <div class="error-icon" aria-hidden="true">!</div>
+        <h1 class="headline danger">خطأ!</h1>
+        <p class="error-message">خسئ القمر وأنتِ موجودة.</p>
+        <button id="restart-puzzle" class="button primary" type="button">إعادة المحاولة</button>
+      </div>
+    </section>
+
+    <section id="screen-finale" class="screen" data-screen="finale">
+      <div class="card finale-card">
+        <span class="page-tag">الصورة الصحيحة</span>
+        <div id="final-image" class="final-image" aria-label="الصورة النهائية"></div>
+        <h1 class="headline">شطورة.</h1>
+        <p class="final-line">حتى البازل ما رضي يكتمل إلا فيكِ، بدك أنا أرضى بدونك؟</p>
+        <button id="go-next-placeholder" class="button primary" type="button">الانتقال إلى الصفحة التالية</button>
+      </div>
+    </section>
+
+    <section id="screen-next-placeholder" class="screen" data-screen="next-placeholder">
+      <div class="card intro-card">
+        <span class="page-tag">المرحلة التالية</span>
+        <h1 class="headline">انتهت هذه المرحلة.</h1>
+        <p class="muted">هذه مساحة جاهزة لإضافة الصفحات التالية لاحقًا بدون تغيير هيكل الموقع.</p>
+        <button id="back-to-start" class="button ghost" type="button">إعادة التجربة من البداية</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
